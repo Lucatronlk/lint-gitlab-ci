@@ -4,7 +4,7 @@
 
 [pre-commit-hook](https://pre-commit.com) validating and linting your `.gitlab.ci.yml` using the [`/ci/lint/`](https://docs.gitlab.com/ee/api/lint.html) API endpoint.
 
-[![shellcheck](https://github.com/FalcoSuessgott/lint-gitlab-ci/actions/workflows/shellcheck.yml/badge.svg)](https://github.com/FalcoSuessgott/lint-gitlab-ci/actions/workflows/shellcheck.yml)
+[![shellcheck](https://github.com/lucatronlk/lint-gitlab-ci/actions/workflows/shellcheck.yml/badge.svg)](https://github.com/lucatronlk/lint-gitlab-ci/actions/workflows/shellcheck.yml)
 
 ## Features
 

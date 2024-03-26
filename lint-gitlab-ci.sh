@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-# GITLAB_SERVER_URL=${GITLAB_SERVER_URL:-"gitlab.com"}
+#GITLAB_SERVER_URL=${GITLAB_SERVER_URL:-"gitlab.com"}
 # ## get gitlab push remote
 GITLAB_REMOTE=$(git remote -v | grep push | awk '{print $2}')
 # ## remove useless parts
@@ -15,24 +15,24 @@ GITLAB_REMOTE=${GITLAB_REMOTE%.git}
 #GITLAB_SERVER_URL=$(echo "${GITLAB_REMOTE:?}" | cut -d':' -f1)
 GITLAB_SERVER_URL=$(echo "${GITLAB_REMOTE:?}" | cut -d'/' -f1)
 
-echo $GITLAB_SERVER_URL
+echo "${GITLAB_SERVER_URL}"
 # # ## get the project name and URL encode
-# GITLAB_PROJECT=$(echo "${GITLAB_REMOTE:?}" | cut -d':' -f2 | sed 's#/#%2F#g' )
+#GITLAB_PROJECT=$(echo "${GITLAB_REMOTE:?}" | cut -d':' -f2 | sed 's#/#%2F#g' )
 GITLAB_PROJECT=$(echo "${GITLAB_REMOTE:?}" | cut -d'/' -f5 )
-echo $GITLAB_PROJECT
+echo "${GITLAB_PROJECT}"
 # # ## get project ID
 GITLAB_PROJECT_ID=$(curl -s --header "PRIVATE-TOKEN: ${GITLAB_TOKEN:?}" "https://${GITLAB_SERVER_URL:?}/api/v4/search?scope=projects&search=${GITLAB_PROJECT:?}" | jq '.[0].id')
-echo $GITLAB_PROJECT_ID
+echo "${GITLAB_PROJECT_ID}"
 CI_FILE=${1:-".gitlab-ci.yml"}
-TOKEN=${GITLAB_TOKEN:-""}
+TOKEN="${GITLAB_TOKEN:-""}"
 # ## ENDPOINT: see https://docs.gitlab.com/ee/api/lint.html
 # ## old endpoint, deprecated since 15.7, removed in 16.0
 # API_ENDPOINT=ci/lint
 # ## new endpoint: /projects/:id/ci/lint
 API_ENDPOINT=projects/${GITLAB_PROJECT_ID:?}/ci/lint
-echo $API_ENDPOINT
+echo "${API_ENDPOINT}"
 URL="https://${GITLAB_SERVER_URL}/api/v4/${API_ENDPOINT:?}?include_merged_yaml=true"
-echo $URL
+echo "${URL}"
 
 stderr() {
   printf >&2 "Error: %s\n" "$@"
